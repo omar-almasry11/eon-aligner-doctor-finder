@@ -1,0 +1,40 @@
+{
+  "name": "eon-aligner-doctor-finder",
+  "version": "1.0.0",
+  "description": "Accessible clinic locator with Google Maps API integration, country/city filtering, and Airtable backend. Built with vanilla JS and Tailwind CSS.",
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "google",
+    "maps",
+    "clinic",
+    "locator",
+    "doctor",
+    "finder",
+    "airtable",
+    "vanilla",
+    "js",
+    "wcag",
+    "aria"
+  ],
+  "homepage": "https://github.com/omar-almasry11/eon-aligner-doctor-finder#readme",
+  "bugs": {
+    "url": "https://github.com/omar-almasry11/eon-aligner-doctor-finder/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omar-almasry11/eon-aligner-doctor-finder.git"
+  },
+  "license": "ISC",
+  "author": "Omar Almasry",
+  "type": "commonjs",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tailwindcss -i ./css/input.css -o ./css/styles.css", 
+    "watch": "tailwindcss -i ./css/input.css -o ./css/styles.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}
