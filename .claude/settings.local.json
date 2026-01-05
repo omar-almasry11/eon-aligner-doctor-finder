@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /Users/omaralmasry/Documents/Web\\\\ Dev\\\\ Projects/eon-aligner-doctor-finder && npm install:*)",
+      "Bash(curl:*)"
+    ]
+  }
+}

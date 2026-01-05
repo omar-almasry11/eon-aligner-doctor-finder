@@ -48,21 +48,33 @@ export const testGoogleMapsConnection = async () => {
 }
 
 export const fetchDoctors = async (baseId, tableName) => {
+  const allRecords = []
+  let offset = null
+
   try {
-    const response = await fetch(
-      `https://api.airtable.com/v0/${baseId}/${tableName}`,
-      {
+    do {
+      const url = new URL(`https://api.airtable.com/v0/${baseId}/${encodeURIComponent(tableName)}`)
+      if (offset) {
+        url.searchParams.set('offset', offset)
+      }
+
+      const response = await fetch(url, {
         headers: {
           'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
           'Content-Type': 'application/json'
         }
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
       }
-    )
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-    const data = await response.json()
-    return data.records
+
+      const data = await response.json()
+      allRecords.push(...data.records)
+      offset = data.offset // Will be undefined when no more pages
+    } while (offset)
+
+    return allRecords
   } catch (error) {
     console.error('Error fetching doctors:', error)
     throw error
