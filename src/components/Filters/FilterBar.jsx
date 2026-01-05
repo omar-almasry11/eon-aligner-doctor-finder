@@ -20,36 +20,41 @@ export function FilterBar({
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-3 p-4 bg-white border-b">
-      <Dropdown
-        options={countries}
-        value={selectedCountry}
-        onChange={handleCountryChange}
-        placeholder="Select Country"
-      />
+    <div className="flex flex-col gap-3 p-4 bg-white border-b">
+      <div className="text-4xl leading-none font-semibold text-gray-800 margin-bottom-8">
+        Find your doctor
+      </div>
+      <div className="flex flex-wrap items-center gap-3">
+        <Dropdown
+          options={countries}
+          value={selectedCountry}
+          onChange={handleCountryChange}
+          placeholder="Select Country"
+        />
 
-      <Dropdown
-        options={cities}
-        value={selectedCity}
-        onChange={onCityChange}
-        placeholder="Select City"
-        disabled={!selectedCountry}
-      />
+        <Dropdown
+          options={cities}
+          value={selectedCity}
+          onChange={onCityChange}
+          placeholder="Select City"
+          disabled={!selectedCountry}
+        />
 
-      {hasFilters && (
-        <button
-          onClick={onReset}
-          className="px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
-        >
-          Reset Filters
-        </button>
-      )}
+        {hasFilters && (
+          <button
+            onClick={onReset}
+            className="px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            Reset Filters
+          </button>
+        )}
 
-      {hasFilters && (
-        <span className="text-sm text-gray-500 ml-auto">
-          Showing doctors in {selectedCity || selectedCountry}
-        </span>
-      )}
+        {hasFilters && (
+          <span className="text-sm text-gray-500 ml-auto">
+            Showing doctors in {selectedCity || selectedCountry}
+          </span>
+        )}
+      </div>
     </div>
   )
 }

@@ -6,6 +6,7 @@ import { DoctorMap } from './Map/DoctorMap'
 import { FilterBar } from './Filters/FilterBar'
 import { DoctorList } from './DoctorList/DoctorList'
 import { LoadingSpinner } from './UI/LoadingSpinner'
+import logo from '../assets/logo.svg'
 
 export function DoctorFinder() {
   // Filter state
@@ -60,10 +61,12 @@ export function DoctorFinder() {
     <div className="h-screen flex flex-col bg-gray-50">
       {/* Header */}
       <header className="bg-white shadow-sm border-b">
-        <div className="px-6 py-4">
-          <h1 className="text-2xl font-bold text-gray-900">
-            <span className="text-teal-600">Eon Aligner</span> Doctor Finder
-          </h1>
+        <div className="px-6 py-4 flex items-center">
+          <img
+            src={logo}
+            alt="Eon Aligner"
+            className="h-16 w-auto"
+          />
         </div>
       </header>
 

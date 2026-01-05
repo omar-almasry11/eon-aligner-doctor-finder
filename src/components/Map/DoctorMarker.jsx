@@ -1,4 +1,11 @@
-import { Marker, Pin, InfoWindow } from '@vis.gl/react-google-maps'
+import {
+  AdvancedMarker,
+  InfoWindow,
+  Pin,
+  useAdvancedMarkerRef,
+  useMap
+} from '@vis.gl/react-google-maps'
+import { useEffect, useRef } from 'react'
 import { useGeocode } from '../../hooks/useGeocode'
 import { getDirectionsUrl } from '../../utils/helpers'
 import { PIN_COLORS } from '../../utils/constants'
@@ -10,6 +17,9 @@ export function DoctorMarker({ doctor, isSelected, onSelect }) {
     doctor.longitude,
     isSelected
   )
+  const [markerRef, marker] = useAdvancedMarkerRef()
+  const tooltipInfoWindowRef = useRef(null)
+  const map = useMap()
 
   const handleMarkerClick = () => {
     onSelect?.(doctor)
@@ -19,22 +29,70 @@ export function DoctorMarker({ doctor, isSelected, onSelect }) {
     onSelect?.(null)
   }
 
-  // Create tooltip text with doctor name and instruction
-  const tooltipText = `${doctor.name}\nClick to view clinic details`
+  useEffect(() => {
+    if (!marker || !window.google?.maps || !map) return
+
+    if (!tooltipInfoWindowRef.current) {
+      tooltipInfoWindowRef.current = new window.google.maps.InfoWindow({
+        disableAutoPan: true
+      })
+    }
+
+    const tooltipInfoWindow = tooltipInfoWindowRef.current
+
+    const openTooltip = () => {
+      if (isSelected) return
+      tooltipInfoWindow.setContent(
+        `<div style="pointer-events:none; font-size:12px; color:#111827;">
+           <div style="font-weight:600;">${doctor.name}</div>
+           <div style="color:#4b5563;">Click to view clinic information</div>
+         </div>`
+      )
+      tooltipInfoWindow.open({ map, anchor: marker })
+    }
+
+    const closeTooltip = () => {
+      tooltipInfoWindow.close()
+    }
+
+    const mouseOverListener = marker.addListener('gmp-mouseover', openTooltip)
+
+    const mouseOutListener = marker.addListener('gmp-mouseout', closeTooltip)
+
+    const clickListener = marker.addListener('gmp-click', closeTooltip)
+
+    const contentElement =
+      marker.content instanceof Element ? marker.content : null
+    if (contentElement) {
+      contentElement.addEventListener('mouseenter', openTooltip)
+      contentElement.addEventListener('mouseleave', closeTooltip)
+    }
+
+    return () => {
+      mouseOverListener.remove()
+      mouseOutListener.remove()
+      clickListener.remove()
+      if (contentElement) {
+        contentElement.removeEventListener('mouseenter', openTooltip)
+        contentElement.removeEventListener('mouseleave', closeTooltip)
+      }
+      tooltipInfoWindow.close()
+    }
+  }, [doctor.name, isSelected, marker, map])
 
   return (
     <>
-      <Marker
+      <AdvancedMarker
+        ref={markerRef}
         position={{ lat: doctor.latitude, lng: doctor.longitude }}
         onClick={handleMarkerClick}
-        title={tooltipText}
       >
         <Pin
           background={PIN_COLORS.background}
           glyphColor={PIN_COLORS.glyph}
           borderColor={PIN_COLORS.border}
         />
-      </Marker>
+      </AdvancedMarker>
 
       {isSelected && (
         <InfoWindow
