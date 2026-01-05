@@ -7,7 +7,7 @@ const GOOGLE_MAPS_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
 
 export function DoctorMap({ doctors, selectedDoctor, onDoctorSelect, mapCenter, zoom }) {
   return (
-    <APIProvider apiKey={GOOGLE_MAPS_KEY}>
+    <APIProvider apiKey={GOOGLE_MAPS_KEY} version="beta">
       <Map
         defaultCenter={MAP_DEFAULTS.center}
         defaultZoom={MAP_DEFAULTS.countryZoom}

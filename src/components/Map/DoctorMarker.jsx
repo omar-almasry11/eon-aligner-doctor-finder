@@ -1,33 +1,33 @@
-import { useState } from 'react'
 import { Marker, Pin, InfoWindow } from '@vis.gl/react-google-maps'
 import { useGeocode } from '../../hooks/useGeocode'
 import { getDirectionsUrl } from '../../utils/helpers'
 import { PIN_COLORS } from '../../utils/constants'
 
 export function DoctorMarker({ doctor, isSelected, onSelect }) {
-  const [infoOpen, setInfoOpen] = useState(false)
-
   // Lazy load address only when InfoWindow opens
   const { address, loading: addressLoading } = useGeocode(
     doctor.latitude,
     doctor.longitude,
-    infoOpen
+    isSelected
   )
 
   const handleMarkerClick = () => {
-    setInfoOpen(true)
     onSelect?.(doctor)
   }
 
   const handleClose = () => {
-    setInfoOpen(false)
+    onSelect?.(null)
   }
+
+  // Create tooltip text with doctor name and instruction
+  const tooltipText = `${doctor.name}\nClick to view clinic details`
 
   return (
     <>
       <Marker
         position={{ lat: doctor.latitude, lng: doctor.longitude }}
         onClick={handleMarkerClick}
+        title={tooltipText}
       >
         <Pin
           background={PIN_COLORS.background}
@@ -36,7 +36,7 @@ export function DoctorMarker({ doctor, isSelected, onSelect }) {
         />
       </Marker>
 
-      {infoOpen && (
+      {isSelected && (
         <InfoWindow
           position={{ lat: doctor.latitude, lng: doctor.longitude }}
           onClose={handleClose}
