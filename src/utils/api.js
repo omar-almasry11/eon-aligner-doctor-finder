@@ -1,4 +1,3 @@
-
 const AIRTABLE_API_KEY = import.meta.env.VITE_AIRTABLE_API_KEY
 const GOOGLE_MAPS_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
 
@@ -48,33 +47,17 @@ export const testGoogleMapsConnection = async () => {
 }
 
 export const fetchDoctors = async (baseId, tableName) => {
-  const allRecords = []
-  let offset = null
-
   try {
-    do {
-      const url = new URL(`https://api.airtable.com/v0/${baseId}/${encodeURIComponent(tableName)}`)
-      if (offset) {
-        url.searchParams.set('offset', offset)
-      }
+    // Call the Netlify Function to fetch doctors
+    // The function handles pagination and keeps the API key server-side
+    const response = await fetch('/.netlify/functions/doctors')
 
-      const response = await fetch(url, {
-        headers: {
-          'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-          'Content-Type': 'application/json'
-        }
-      })
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-
-      const data = await response.json()
-      allRecords.push(...data.records)
-      offset = data.offset // Will be undefined when no more pages
-    } while (offset)
-
-    return allRecords
+    const records = await response.json()
+    return records
   } catch (error) {
     console.error('Error fetching doctors:', error)
     throw error
