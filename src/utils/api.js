@@ -46,7 +46,7 @@ export const testGoogleMapsConnection = async () => {
   }
 }
 
-export const fetchDoctors = async (baseId, tableName) => {
+export const fetchDoctors = async () => {
   try {
     // Call the Netlify Function to fetch doctors
     // The function handles pagination and keeps the API key server-side
