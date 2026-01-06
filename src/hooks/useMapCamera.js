@@ -33,6 +33,6 @@ export function useMapCamera(filteredDoctors, selectedCountry, selectedCity, sel
     }
 
     // Fallback to defaults
-    return { center: null, zoom: MAP_DEFAULTS.countryZoom }
+    return { center: MAP_DEFAULTS.center, zoom: MAP_DEFAULTS.countryZoom }
   }, [filteredDoctors, selectedCountry, selectedCity, selectedDoctor])
 }

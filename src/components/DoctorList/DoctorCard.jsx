@@ -2,7 +2,7 @@ export function DoctorCard({ doctor, isSelected, onClick }) {
   return (
     <div
       onClick={onClick}
-      className={`p-4 cursor-pointer transition-colors hover:bg-gray-50
+      className={`p-4 cursor-pointer transition-colors hover:bg-gray-50 border-b border-[#e4e4e7]
         ${isSelected ? 'bg-teal-50 border-l-4 border-l-teal-600' : ''}`}
     >
       <div className="flex gap-3">

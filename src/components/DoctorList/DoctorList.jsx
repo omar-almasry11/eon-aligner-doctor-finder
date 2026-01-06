@@ -30,7 +30,7 @@ export function DoctorList({ doctors, selectedDoctor, onDoctorSelect, loading })
           {doctors.length} doctor{doctors.length !== 1 ? 's' : ''} found
         </span>
       </div>
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto border-r border-[#e4e4e7]">
         {doctors.map(doctor => (
           <DoctorCard
             key={doctor.id}

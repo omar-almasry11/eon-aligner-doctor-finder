@@ -20,8 +20,8 @@ export function FilterBar({
   }
 
   return (
-    <div className="flex flex-col gap-3 p-4 bg-white">
-      <div className="text-4xl leading-none font-semibold text-gray-800 margin-bottom-8">
+    <div className="flex flex-col gap-3 bg-white px-6 pt-4 pb-8">
+      <div className="text-4xl leading-none font-semibold text-[#004745] mb-2">
         Find your doctor
       </div>
       <div className="flex flex-wrap items-center gap-3">
