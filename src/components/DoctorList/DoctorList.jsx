@@ -25,7 +25,7 @@ export function DoctorList({ doctors, selectedDoctor, onDoctorSelect, loading })
 
   return (
     <div className="h-full flex flex-col">
-      <div className="p-4 border-b bg-gray-50">
+      <div className="p-4 bg-gray-50">
         <span className="text-sm text-gray-600">
           {doctors.length} doctor{doctors.length !== 1 ? 's' : ''} found
         </span>

@@ -28,13 +28,24 @@ export function DoctorFinder() {
   const { center: mapCenter, zoom: mapZoom } = useMapCamera(
     filteredDoctors,
     selectedCountry,
-    selectedCity
+    selectedCity,
+    selectedDoctor
   )
 
   const handleReset = () => {
     setSelectedCountry(null)
     setSelectedCity(null)
     setSelectedDoctor(null)
+  }
+
+  const handleCountryChange = (country) => {
+    setSelectedCountry(country)
+    setSelectedDoctor(null) // Clear selected doctor when country changes
+  }
+
+  const handleCityChange = (city) => {
+    setSelectedCity(city)
+    setSelectedDoctor(null) // Clear selected doctor when city changes
   }
 
   const handleDoctorSelect = (doctor) => {
@@ -60,7 +71,7 @@ export function DoctorFinder() {
   return (
     <div className="h-screen flex flex-col bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-white shadow-sm">
         <div className="px-6 py-4 flex items-center">
           <img
             src={logo}
@@ -76,8 +87,8 @@ export function DoctorFinder() {
         cities={cities}
         selectedCountry={selectedCountry}
         selectedCity={selectedCity}
-        onCountryChange={setSelectedCountry}
-        onCityChange={setSelectedCity}
+        onCountryChange={handleCountryChange}
+        onCityChange={handleCityChange}
         onReset={handleReset}
       />
 
@@ -92,7 +103,7 @@ export function DoctorFinder() {
       ) : (
         <div className="flex-1 flex overflow-hidden">
           {/* Sidebar - Doctor List */}
-          <aside className="w-80 bg-white border-r flex-shrink-0 hidden md:block">
+          <aside className="w-80 bg-white flex-shrink-0 hidden md:block">
             <DoctorList
               doctors={filteredDoctors}
               selectedDoctor={selectedDoctor}
