@@ -8,7 +8,7 @@ const GOOGLE_MAPS_MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID
 
 export function DoctorMap({ doctors, selectedDoctor, onDoctorSelect, mapCenter, zoom }) {
   return (
-    <APIProvider apiKey={GOOGLE_MAPS_KEY} version="beta" libraries={['marker']}>
+    <APIProvider apiKey={GOOGLE_MAPS_KEY} version="beta" libraries={['marker', 'geocoding']}>
       <Map
         defaultCenter={MAP_DEFAULTS.center}
         defaultZoom={MAP_DEFAULTS.countryZoom}
