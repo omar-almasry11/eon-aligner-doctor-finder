@@ -1,11 +1,12 @@
 [build]
-  command = "npm run build"
+  # Netlify runs `npm install` before this; `npm ci` wipes node_modules and reinstalls
+  # exactly from package-lock.json so Tailwind/Vite deps can't end up half-installed.
+  command = "npm ci && npm run build"
   publish = "dist"
   functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "20.19.0"
-  # Netlify sets NODE_ENV=production; without this, npm can omit devDependencies and
-  # break the Vite build (@vitejs/plugin-react, eslint-only tools, etc.).
+  # With NODE_ENV=production, npm omits devDependencies unless this is false (eslint, types, etc.).
   NPM_CONFIG_PRODUCTION = "false"
   SECRETS_SCAN_OMIT_PATHS = "dist/**"
