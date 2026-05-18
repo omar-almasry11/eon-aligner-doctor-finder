@@ -5,4 +5,7 @@
 
 [build.environment]
   NODE_VERSION = "20.19.0"
+  # Netlify sets NODE_ENV=production; without this, npm can omit devDependencies and
+  # break the Vite build (@vitejs/plugin-react, eslint-only tools, etc.).
+  NPM_CONFIG_PRODUCTION = "false"
   SECRETS_SCAN_OMIT_PATHS = "dist/**"
