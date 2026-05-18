@@ -1,12 +1,13 @@
 export function Dropdown({ options, value, onChange, placeholder, disabled, className = '' }) {
   return (
     <select
+      aria-label={placeholder}
       value={value || ''}
       onChange={(e) => onChange(e.target.value || null)}
       disabled={disabled}
-      className={`px-4 py-2 rounded-lg bg-white text-gray-700
-        focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent
-        disabled:bg-gray-100 disabled:cursor-not-allowed border border-gray-300
+      className={`px-4 py-2 rounded-md bg-surface text-ink-muted border border-border
+        focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent
+        disabled:bg-surface-hover disabled:cursor-not-allowed
         ${className}`}
     >
       <option value="">{placeholder}</option>

@@ -9,9 +9,10 @@ export const MAP_DEFAULTS = {
   cityZoom: 12
 }
 
-// Pin colors (Eon Aligner brand teal)
+// Pin colors — kept here as hex because Google Maps doesn't accept CSS variables.
+// Keep in sync with --color-brand in index.css.
 export const PIN_COLORS = {
-  background: '#0D9488',
-  glyph: '#ffffff',
-  border: '#0D9488'
+  background: '#01BFB8',
+  glyph: '#FFFFFF',
+  border: '#10A7A2'
 }

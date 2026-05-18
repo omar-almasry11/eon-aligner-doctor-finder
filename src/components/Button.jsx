@@ -17,7 +17,7 @@ const iconMap = {
   location: LocationIcon
 }
 
-function Button({ children, onClick, variant = 'primary', iconName = 'user', disabled = false }) {
+export function Button({ children, onClick, variant = 'primary', iconName = 'user', disabled = false }) {
   const baseStyles = 'px-4 py-2 rounded font-medium transition-colors flex items-center gap-2 cursor-pointer'
 
   const variants = {
@@ -42,5 +42,3 @@ function Button({ children, onClick, variant = 'primary', iconName = 'user', dis
     </button>
   )
 }
-
-export default Button

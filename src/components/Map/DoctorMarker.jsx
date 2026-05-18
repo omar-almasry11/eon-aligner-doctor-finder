@@ -43,9 +43,9 @@ export function DoctorMarker({ doctor, isSelected, onSelect }) {
     const openTooltip = () => {
       if (isSelected) return
       tooltipInfoWindow.setContent(
-        `<div style="pointer-events:none; font-size:12px; color:#111827;">
-           <div style="font-weight:600;">${doctor.name}</div>
-           <div style="color:#4b5563;">Click to view clinic information</div>
+        `<div style="pointer-events:none; color:#1A1A1A; font-family:'Roboto',system-ui,sans-serif;">
+           <div style="font-weight:600; font-size: 16px; margin-bottom: 6px;">${doctor.name}</div>
+           <div style="color:#5C5C66; font-size: 14px;">Click to view clinic information</div>
          </div>`
       )
       tooltipInfoWindow.open({ map, anchor: marker })
@@ -100,29 +100,29 @@ export function DoctorMarker({ doctor, isSelected, onSelect }) {
           onClose={handleClose}
         >
           <div className="min-w-[250px] p-2">
-            <div className="flex gap-3">
+            <div className="flex items-center gap-3">
               {doctor.photo ? (
                 <img
                   src={doctor.photo}
-                  alt={doctor.name}
+                  alt=""
                   className="w-16 h-16 rounded-full object-cover"
                 />
               ) : (
-                <div className="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-teal-600" fill="currentColor" viewBox="0 0 24 24">
+                <div className="w-16 h-16 rounded-full bg-brand/10 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-brand" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                   </svg>
                 </div>
               )}
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900">{doctor.name}</h3>
-                <p className="text-sm text-teal-600">{doctor.clinic}</p>
+                <h3 className="font-semibold text-base text-ink">{doctor.name}</h3>
+                <p className="text-sm font-normal text-ink-muted">{doctor.clinic}</p>
               </div>
             </div>
 
-            <div className="mt-3 text-sm text-gray-600">
+            <div className="mt-3 text-sm text-ink-muted">
               {addressLoading ? (
-                <span className="text-gray-400">Loading address...</span>
+                <span className="text-ink-subtle">Loading address...</span>
               ) : (
                 address || 'Address not found'
               )}
@@ -132,7 +132,7 @@ export function DoctorMarker({ doctor, isSelected, onSelect }) {
               href={getDirectionsUrl(doctor.latitude, doctor.longitude)}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors text-sm"
+              className="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-brand text-brand-ink rounded-md hover:bg-brand/90 transition-colors text-sm"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />

@@ -12,8 +12,8 @@ export function DoctorList({ doctors, selectedDoctor, onDoctorSelect, loading })
 
   if (doctors.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-full p-6 text-center text-gray-500">
-        <svg className="w-16 h-16 mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="flex flex-col items-center justify-center h-full p-6 text-center text-ink-subtle">
+        <svg className="w-16 h-16 mb-4 text-ink-subtle/60" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
@@ -25,12 +25,12 @@ export function DoctorList({ doctors, selectedDoctor, onDoctorSelect, loading })
 
   return (
     <div className="h-full flex flex-col">
-      <div className="p-4 bg-gray-50">
-        <span className="text-sm text-gray-600">
+      <div className="p-4 bg-surface-muted">
+        <h2 id="doctors-heading" className="text-sm text-ink-muted">
           {doctors.length} doctor{doctors.length !== 1 ? 's' : ''} found
-        </span>
+        </h2>
       </div>
-      <div className="flex-1 overflow-y-auto border-r border-[#e4e4e7]">
+      <ul className="flex-1 overflow-y-auto border-r border-border list-none m-0 p-0">
         {doctors.map(doctor => (
           <DoctorCard
             key={doctor.id}
@@ -39,7 +39,7 @@ export function DoctorList({ doctors, selectedDoctor, onDoctorSelect, loading })
             onClick={() => onDoctorSelect(doctor)}
           />
         ))}
-      </div>
+      </ul>
     </div>
   )
 }

@@ -8,6 +8,26 @@ import { DoctorList } from './DoctorList/DoctorList'
 import { LoadingSpinner } from './UI/LoadingSpinner'
 import logo from '../assets/logo.svg'
 
+function SkipLink() {
+  const handleClick = (event) => {
+    event.preventDefault()
+    const main = document.getElementById('main')
+    if (!main) return
+
+    main.focus({ preventScroll: false })
+    main.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  return (
+    <a href="#main" className="skip-link" onClick={handleClick}>
+      Skip to main content
+    </a>
+  )
+}
+
+const mainClassName =
+  'flex-1 flex flex-col min-h-0 outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2'
+
 export function DoctorFinder() {
   // Filter state
   const [selectedCountry, setSelectedCountry] = useState(null)
@@ -54,76 +74,82 @@ export function DoctorFinder() {
 
   if (error) {
     return (
-      <div className="h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center p-8">
-          <div className="text-red-500 mb-4">
-            <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
+      <div className="h-screen flex flex-col bg-surface-muted">
+        <SkipLink />
+        <header className="bg-surface shadow-sm">
+          <div className="px-6 py-4 flex items-center">
+            <img src={logo} alt="Eon Aligner" className="h-16 w-auto" />
           </div>
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Failed to load doctors</h2>
-          <p className="text-gray-600">{error.message}</p>
-        </div>
+        </header>
+        <main id="main" tabIndex={-1} className="flex-1 flex items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2">
+          <div className="text-center p-8" role="alert">
+            <div className="text-red-500 mb-4">
+              <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <h2 className="text-xl font-semibold text-ink mb-2">Failed to load doctors</h2>
+            <p className="text-ink-muted">{error.message}</p>
+          </div>
+        </main>
       </div>
     )
   }
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
+    <div className="h-screen flex flex-col bg-surface-muted">
+      <SkipLink />
+
+      <header className="bg-surface shadow-sm">
         <div className="px-6 py-4 flex items-center">
-          <img
-            src={logo}
-            alt="Eon Aligner"
-            className="h-16 w-auto"
-          />
+          <img src={logo} alt="Eon Aligner" className="h-16 w-auto" />
         </div>
       </header>
 
-      {/* Filters */}
-      <FilterBar
-        countries={countries}
-        cities={cities}
-        selectedCountry={selectedCountry}
-        selectedCity={selectedCity}
-        onCountryChange={handleCountryChange}
-        onCityChange={handleCityChange}
-        onReset={handleReset}
-      />
+      <main id="main" tabIndex={-1} className={mainClassName}>
+        <FilterBar
+          countries={countries}
+          cities={cities}
+          selectedCountry={selectedCountry}
+          selectedCity={selectedCity}
+          onCountryChange={handleCountryChange}
+          onCityChange={handleCityChange}
+          onReset={handleReset}
+        />
 
-      {/* Main Content */}
-      {loading ? (
-        <div className="flex-1 flex items-center justify-center">
-          <div className="text-center">
-            <LoadingSpinner size="lg" className="mb-4" />
-            <p className="text-gray-600">Loading doctors...</p>
+        {loading ? (
+          <div role="status" className="flex-1 flex items-center justify-center">
+            <div className="text-center">
+              <LoadingSpinner size="lg" className="mb-4" />
+              <p className="text-ink-muted">Loading doctors...</p>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="flex-1 flex overflow-hidden">
-          {/* Sidebar - Doctor List */}
-          <aside className="w-80 bg-white flex-shrink-0 hidden md:block">
-            <DoctorList
-              doctors={filteredDoctors}
-              selectedDoctor={selectedDoctor}
-              onDoctorSelect={handleDoctorSelect}
-              loading={loading}
-            />
-          </aside>
+        ) : (
+          <div className="flex-1 flex overflow-hidden min-h-0">
+            <section
+              aria-labelledby="doctors-heading"
+              className="w-80 bg-surface flex-shrink-0 hidden md:block"
+            >
+              <DoctorList
+                doctors={filteredDoctors}
+                selectedDoctor={selectedDoctor}
+                onDoctorSelect={handleDoctorSelect}
+                loading={loading}
+              />
+            </section>
 
-          {/* Map */}
-          <main className="flex-1">
-            <DoctorMap
-              doctors={filteredDoctors}
-              selectedDoctor={selectedDoctor}
-              onDoctorSelect={handleDoctorSelect}
-              mapCenter={mapCenter}
-              zoom={mapZoom}
-            />
-          </main>
-        </div>
-      )}
+            <section aria-label="Doctor locations map" className="flex-1 min-h-0">
+              <DoctorMap
+                doctors={filteredDoctors}
+                selectedDoctor={selectedDoctor}
+                onDoctorSelect={handleDoctorSelect}
+                mapCenter={mapCenter}
+                zoom={mapZoom}
+              />
+            </section>
+          </div>
+        )}
+      </main>
     </div>
   )
 }
