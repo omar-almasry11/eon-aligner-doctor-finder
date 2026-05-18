@@ -51,8 +51,11 @@ export function FilterBar({
         )}
 
         {hasFilters && (
-          <span className="text-sm text-ink-subtle ml-auto">
-            Showing doctors in {selectedCity || selectedCountry}
+          <span className="text-md font-medium text-ink ml-auto">
+            Showing doctors in{' '}
+            <span className="font-medium text-ink-subtle">
+              {[selectedCity, selectedCountry].filter(Boolean).join(', ')}
+            </span>
           </span>
         )}
       </div>

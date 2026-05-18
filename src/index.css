@@ -50,6 +50,24 @@ body {
   overflow: visible;
 }
 
+/* Google Maps InfoWindows: remove app :focus-visible ring only (outline + white halo).
+   Avoid changing layout props (position/z-index) — that widened the bubbles. */
+.gm-style [class*='gm-style-iw']:focus,
+.gm-style [class*='gm-style-iw']:focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+}
+
+.gm-style a:focus-visible,
+.gm-style button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  box-shadow: none;
+  position: relative;
+  z-index: 1;
+}
+
 .skip-link {
   position: fixed;
   top: 0.75rem;
